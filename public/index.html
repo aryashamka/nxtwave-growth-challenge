@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NxtWave Growth Engine | 500 Registrations Sprint</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .telegram-msg {
+      background: #F1F5F9;
+      border-left: 4px solid #0284C7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-sm">
+          🚀
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight text-slate-900">NxtWave Growth Engine</h1>
+          <p class="text-xs text-slate-500">Workshop Sprint: "Build Your First AI Project in 60 Minutes"</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="w-2 h-2 mr-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live Simulation
+        </span>
+        <span class="text-xs font-medium text-slate-600 bg-slate-100 px-3 py-1 rounded-lg border border-slate-200">
+          Budget: ₹2,000 | 7 Days
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-1 sm:space-x-4 overflow-x-auto py-2">
+      <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-blue-600 bg-blue-50 border border-blue-200 transition">
+        📊 Growth Command Center
+      </button>
+      <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+        🤖 Interactive Bot Simulator
+      </button>
+      <button onclick="switchTab('plan')" id="tab-plan" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+        📋 5-Slide Growth Plan
+      </button>
+      <button onclick="switchTab('ai-notes')" id="tab-ai-notes" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition">
+        🧠 AI & Learning Notes
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- TAB 1: EXECUTIVE DASHBOARD -->
+    <div id="view-dashboard" class="space-y-8">
+      
+      <!-- Top KPIs -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Registrations</p>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-blue-600" id="kpi-total">438</span>
+            <span class="text-xs font-bold text-slate-400">/ 500 Target</span>
+          </div>
+          <div class="w-full bg-slate-100 h-2 rounded-full mt-3 overflow-hidden">
+            <div class="bg-blue-600 h-2 rounded-full" style="width: 87.6%"></div>
+          </div>
+          <p class="text-xs text-emerald-600 font-semibold mt-1.5">87.6% Achieved</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Viral K-Factor</p>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-purple-600" id="kpi-kfactor">0.35</span>
+            <span class="text-xs font-medium text-emerald-600 font-semibold">High Viral</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">Target: >0.25 (1 in 3 brings a peer)</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Acquisition Split</p>
+          <div class="mt-2 flex items-baseline gap-1">
+            <span class="text-2xl font-extrabold text-slate-900" id="kpi-direct">275</span>
+            <span class="text-xs text-slate-400 font-bold">CR / </span>
+            <span class="text-2xl font-extrabold text-indigo-600" id="kpi-viral">163</span>
+            <span class="text-xs text-slate-400 font-bold">Viral</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">37% of leads generated at ₹0 cost</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Cost Per Lead (CPA)</p>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-emerald-600" id="kpi-cpa">₹2.74</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">vs ₹35.00 on Meta Ads (92% cheaper)</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs col-span-2 sm:col-span-1">
+          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Budget Spent</p>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span class="text-3xl font-extrabold text-slate-900" id="kpi-budget">₹1,200</span>
+            <span class="text-xs text-slate-400 font-bold">/ ₹2k</span>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">₹800 buffer remaining</p>
+        </div>
+      </div>
+
+      <!-- Growth Chart & Channel Breakdown -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs lg:col-span-2">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">7-Day Cumulative Growth Velocity (S-Curve)</h2>
+              <p class="text-xs text-slate-500">Tracking compounding direct vs peer-referred student registrations</p>
+            </div>
+            <span class="text-xs bg-blue-50 text-blue-700 font-semibold px-2.5 py-1 rounded-md border border-blue-200">
+              Velocity: +62/day
+            </span>
+          </div>
+          <div class="h-64 sm:h-72">
+            <canvas id="growthChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <h2 class="text-base font-bold text-slate-900 mb-1">Registrations by Branch</h2>
+          <p class="text-xs text-slate-500 mb-4">Targeted final-year specialization mix</p>
+          <div class="h-60 flex items-center justify-center">
+            <canvas id="branchChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- College Leaderboard & Top Advocates -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">🏛 College vs College Race (The Pride Loop)</h2>
+              <p class="text-xs text-slate-500">Peer competition drives organic WhatsApp forwarding</p>
+            </div>
+          </div>
+          <div class="h-64">
+            <canvas id="collegeChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <h2 class="text-base font-bold text-slate-900 mb-1">🔥 Top Student Champions (Class Reps)</h2>
+          <p class="text-xs text-slate-500 mb-4">Incentivized with ₹100 vouchers for 25+ batch registrations</p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 font-semibold uppercase">
+                <tr>
+                  <th class="py-2.5 px-3">Student</th>
+                  <th class="py-2.5 px-3">College</th>
+                  <th class="py-2.5 px-3">Invites</th>
+                  <th class="py-2.5 px-3">Reward Tier</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">🥇 Rahul Sharma</td>
+                  <td class="py-2.5 px-3">JNTU Hyderabad</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-600">32</td>
+                  <td class="py-2.5 px-3"><span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full font-bold">Tier 3 (VIP)</span></td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">🥈 Priya Patel</td>
+                  <td class="py-2.5 px-3">Anna University</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-600">29</td>
+                  <td class="py-2.5 px-3"><span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full font-bold">Tier 3 (VIP)</span></td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">🥉 Ankit Verma</td>
+                  <td class="py-2.5 px-3">VTU, Bangalore</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-600">24</td>
+                  <td class="py-2.5 px-3"><span class="bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-bold">Tier 2 (Code Pack)</span></td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Karthik Rao</td>
+                  <td class="py-2.5 px-3">AKTU Lucknow</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-600">19</td>
+                  <td class="py-2.5 px-3"><span class="bg-purple-50 text-purple-700 border border-purple-200 px-2 py-0.5 rounded-full font-bold">Tier 2 (Code Pack)</span></td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Sneha Reddy</td>
+                  <td class="py-2.5 px-3">Pune University</td>
+                  <td class="py-2.5 px-3 font-bold text-blue-600">15</td>
+                  <td class="py-2.5 px-3"><span class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded-full font-bold">Tier 2 (Code Pack)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB 2: INTERACTIVE BOT SIMULATOR -->
+    <div id="view-simulator" class="hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+        <h2 class="text-xl font-bold text-slate-900">🤖 Telegram Bot Interactive Simulator</h2>
+        <p class="text-sm text-slate-500 mt-1">Experience the frictionless 1-tap registration flow, referral pass generation, and AI project recommender.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Input Form -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+          <h3 class="text-base font-bold text-slate-900">Student Profile Input</h3>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase">Student Name</label>
+            <input type="text" id="simName" value="Rahul Sharma" class="w-full mt-1.5 px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase">College</label>
+            <select id="simCollege" class="w-full mt-1.5 px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option>JNTU Hyderabad</option>
+              <option>Anna University, Chennai</option>
+              <option>VTU, Bangalore</option>
+              <option>AKTU, Lucknow</option>
+              <option>Pune University</option>
+              <option>VIT Vellore</option>
+              <option>Other College</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase">Engineering Branch</label>
+            <select id="simBranch" class="w-full mt-1.5 px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+              <option>Computer Science & Engineering (CSE)</option>
+              <option>Information Technology (IT)</option>
+              <option>Artificial Intelligence & Data Science</option>
+              <option>Electronics & Communication (ECE)</option>
+              <option>Mechanical & Allied (Pivot to Tech)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase">Referred By Code (Optional)</label>
+            <input type="text" id="simRef" placeholder="e.g. PRIYA821 (Leave blank if direct)" class="w-full mt-1.5 px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+
+          <button onclick="handleRegister()" class="w-full mt-2 py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-sm transition">
+            🚀 1-Tap Registration (Simulate /start)
+          </button>
+
+          <div class="pt-3 border-t border-slate-100 flex gap-2">
+            <button onclick="handleIdeas()" class="flex-1 py-2 px-3 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 rounded-lg text-xs font-bold transition">
+              💡 /ideas (AI Bullets)
+            </button>
+            <button onclick="handleLeaderboard()" class="flex-1 py-2 px-3 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 rounded-lg text-xs font-bold transition">
+              🏆 /leaderboard
+            </button>
+          </div>
+        </div>
+
+        <!-- Simulated Chat Window -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[520px]">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+              <span class="text-xs font-bold text-slate-700">Telegram Bot (@NxtWaveAIWorkshopBot)</span>
+            </div>
+            <span class="text-xs text-slate-400">Response time: ~0.1s</span>
+          </div>
+
+          <div id="chatBox" class="flex-1 overflow-y-auto py-4 space-y-3 text-xs leading-relaxed">
+            <div class="telegram-msg p-4 rounded-xl text-slate-800">
+              🚀 <strong>Hey Rahul! Welcome to NxtWave's 60-Min AI Challenge.</strong><br><br>
+              Tired of generic CRUD apps on your resume that recruiters ignore?<br>
+              In this 60-minute live workshop, you will:<br>
+              ✅ Build & deploy an autonomous AI Agent<br>
+              ✅ Get 3 high-impact resume bullet points for 2025/2026 placements<br>
+              ✅ Receive a verifiable NxtWave AI Builder Certificate<br><br>
+              👉 <em>Ready to lock in your free seat?</em> Tap the button on the left!
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-100 text-slate-400 text-xs flex justify-between">
+            <span>Powered by Telegram Long-Polling & SQLite</span>
+            <span>K-Factor: 0.35</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB 3: 5-SLIDE GROWTH PLAN -->
+    <div id="view-plan" class="hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+        <h2 class="text-xl font-bold text-slate-900">📋 5-Slide Growth Plan Deck</h2>
+        <p class="text-sm text-slate-500 mt-1">Ready to present or export to PDF for the NxtWave Growth Intern submission.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Slide 1</span>
+          <h3 class="text-base font-bold text-slate-900">Understanding the Student (High-Empathy ICP)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            <strong>Target:</strong> Final-year B.Tech students (2025/26 batch) across Tier-2/3 colleges (JNTU, Anna Univ, VTU, AKTU) in CSE/IT, AI&DS, and ECE.<br><br>
+            <strong>The Psychological Trigger:</strong> Severe placement anxiety. Hiring freezes mean recruiters discard generic CRUD or calculator projects.<br><br>
+            <strong>The Converting Hook:</strong> Not "Learn AI", but <em>"Build & Deploy a Live AI Agent + Get 3 Ready-to-Use Resume Bullet Points in 60 Minutes."</em>
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Slide 2</span>
+          <h3 class="text-base font-bold text-slate-900">The Math to 500 (Why Paid Ads Fail at ₹2k)</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Meta Ads student CPL is ₹25–₹40. A ₹2,000 budget would exhaust in 48 hours for only <strong>50–70 registrations</strong>.<br><br>
+            <strong>The Lean Allocation:</strong><br>
+            • ₹1,200: 12 Class Reps × ₹100 bounty for 25+ batchmates = <strong>275 leads</strong><br>
+            • ₹500: Viral referral ladder rewards (K=0.35) = <strong>145 leads</strong><br>
+            • ₹0: Placement Telegram & Discord drops = <strong>80 leads</strong><br>
+            • ₹300: Cloud reserve = <strong>Total: 500+ at ₹2.74/lead</strong>.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Slide 3</span>
+          <h3 class="text-base font-bold text-slate-900">The 3 Prioritized Channels & Execution</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            <strong>1. CR Micro-Bounty Network:</strong> 15–20 Class Reps post high-urgency messages directly to official batch WhatsApp groups (95%+ open rate).<br><br>
+            <strong>2. Telegram Peer Referral Loop:</strong> Every registrant gets an Admit Pass with a referral code and reward ladder (unlocking resume bullets and starter repo).<br><br>
+            <strong>3. Placement Telegram Drops:</strong> Value-first sharing of the `/ideas` project generator across student placement communities.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-3">
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider bg-blue-50 px-2 py-1 rounded">Slide 4 & 5</span>
+          <h3 class="text-base font-bold text-slate-900">7-Day Sprint Timeline & Retention</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            • <strong>Days 1–2:</strong> Bot deployment & CR recruitment.<br>
+            • <strong>Days 3–4:</strong> First WhatsApp blasts & referral loop kicks in.<br>
+            • <strong>Days 5–6:</strong> College vs College leaderboard race pushes total past 400.<br>
+            • <strong>Day 7:</strong> Automated T-24h and T-1h reminder notifications ensure 70%+ live attendance rate.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AI & LEARNING NOTES -->
+    <div id="view-ai-notes" class="hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+        <h2 class="text-xl font-bold text-slate-900">🧠 AI & Learning Notes: Ask → Suggestion → Rejection</h2>
+        <p class="text-sm text-slate-500 mt-1">Proof of critical thinking, commercial judgment, and non-reliance on raw AI hallucinations.</p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2.5 py-1 rounded-full uppercase">Decision 1: Budget Strategy</span>
+          <h3 class="text-base font-bold text-slate-900 mt-2">Paid Ads vs. Campus Micro-Bounties</h3>
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What I Asked:</span>
+              <p class="text-slate-600 mt-1">"How should I spend ₹2,000 to get 500 student registrations?"</p>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What AI Suggested:</span>
+              <p class="text-slate-600 mt-1">"Run Meta lead gen ads targeting engineering colleges."</p>
+            </div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+              <span class="font-bold text-emerald-800">What I Deliberately Rejected & Why:</span>
+              <p class="text-emerald-700 mt-1"><strong>Rejected paid ads.</strong> CPL is ₹25–40, giving only 50–70 leads. Pivoted 100% of budget into CR bounties and referral incentives, dropping CPA to ₹2.74.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2.5 py-1 rounded-full uppercase">Decision 2: Working Asset</span>
+          <h3 class="text-base font-bold text-slate-900 mt-2">10-Section Landing Page vs. 1-Tap Bot Flow</h3>
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What I Asked:</span>
+              <p class="text-slate-600 mt-1">"Design the registration landing page for the workshop."</p>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What AI Suggested:</span>
+              <p class="text-slate-600 mt-1">"Build a long React landing page with 6 form fields."</p>
+            </div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+              <span class="font-bold text-emerald-800">What I Deliberately Rejected & Why:</span>
+              <p class="text-emerald-700 mt-1"><strong>Rejected standard landing page.</strong> High mobile form friction leads to 60%+ drop-off. Replaced with 1-tap bot with viral loops and reminders.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2.5 py-1 rounded-full uppercase">Decision 3: Messaging Hook</span>
+          <h3 class="text-base font-bold text-slate-900 mt-2">Free Certificates vs. Placement Currency</h3>
+          <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What I Asked:</span>
+              <p class="text-slate-600 mt-1">"What marketing hook converts engineering students?"</p>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+              <span class="font-bold text-slate-700">What AI Suggested:</span>
+              <p class="text-slate-600 mt-1">"Offer a free Certificate of Participation."</p>
+            </div>
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+              <span class="font-bold text-emerald-800">What I Deliberately Rejected & Why:</span>
+              <p class="text-emerald-700 mt-1"><strong>Rejected participation certificates.</strong> Recruiters ignore them. Positioned around practical placement currency: ready-to-use resume bullet points.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    NxtWave Growth Challenge Round 1 | Built with Python, SQLite, Tailwind CSS & Chart.js
+  </footer>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      ['dashboard', 'simulator', 'plan', 'ai-notes'].forEach(id => {
+        document.getElementById(`view-${id}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-${id}`);
+        btn.className = "tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition";
+      });
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      activeBtn.className = "tab-btn px-4 py-2 rounded-lg text-sm font-semibold text-blue-600 bg-blue-50 border border-blue-200 transition";
+    }
+
+    // Chart.js Implementations
+    const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+    new Chart(ctxGrowth, {
+      type: 'line',
+      data: {
+        labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+        datasets: [
+          {
+            label: 'Total Registrations',
+            data: [35, 88, 168, 272, 368, 416, 438],
+            borderColor: '#2563EB',
+            backgroundColor: 'rgba(37, 99, 235, 0.08)',
+            fill: true,
+            tension: 0.35,
+            borderWidth: 2.5
+          },
+          {
+            label: 'Direct (CR WhatsApp Blasts)',
+            data: [30, 70, 125, 185, 230, 260, 275],
+            borderColor: '#F59E0B',
+            borderDash: [5, 5],
+            tension: 0.35,
+            borderWidth: 2
+          },
+          {
+            label: 'Compounding Viral Referrals',
+            data: [5, 18, 43, 87, 138, 156, 163],
+            borderColor: '#9333EA',
+            tension: 0.35,
+            borderWidth: 2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } } },
+        scales: { y: { beginAtZero: true, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } }
+      }
+    });
+
+    const ctxBranch = document.getElementById('branchChart').getContext('2d');
+    new Chart(ctxBranch, {
+      type: 'doughnut',
+      data: {
+        labels: ['CSE (46%)', 'AI & DS (20%)', 'IT (17%)', 'ECE (13%)', 'Mech/Allied (4%)'],
+        datasets: [{
+          data: [204, 88, 73, 55, 18],
+          backgroundColor: ['#2563EB', '#7C3AED', '#06B6D4', '#F59E0B', '#64748B']
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } }
+      }
+    });
+
+    const ctxCollege = document.getElementById('collegeChart').getContext('2d');
+    new Chart(ctxCollege, {
+      type: 'bar',
+      data: {
+        labels: ['JNTU Hyd', 'Anna Univ', 'VTU Blr', 'AKTU', 'Pune Univ', 'VIT Vellore', 'Osmania'],
+        datasets: [{
+          label: 'Registrations',
+          data: [64, 58, 52, 44, 38, 32, 28],
+          backgroundColor: '#3B82F6',
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true, grid: { color: '#F1F5F9' } }, x: { grid: { display: false } } }
+      }
+    });
+
+    // Simulator Handlers
+    function handleRegister() {
+      const name = document.getElementById('simName').value || 'Student';
+      const college = document.getElementById('simCollege').value;
+      const branch = document.getElementById('simBranch').value;
+      const ref = document.getElementById('simRef').value;
+      const code = name.replace(/[^a-zA-Z]/g, '').toUpperCase().slice(0, 6) + Math.floor(Math.random() * 899 + 100);
+      const link = `https://t.me/NxtWaveAIWorkshopBot?start=${code}`;
+
+      const chat = document.getElementById('chatBox');
+      chat.innerHTML += `
+        <div class="bg-blue-600 text-white p-3 rounded-xl ml-auto max-w-[80%] text-right font-medium">
+          /register ${name} - ${college} (${branch})
+        </div>
+        <div class="telegram-msg p-4 rounded-xl text-slate-800">
+          🎉 <strong>CONGRATULATIONS ${name.toUpperCase()}!</strong><br>
+          🎟 <strong>Your Workshop Admit Pass is Confirmed!</strong><br><br>
+          🏛 <strong>College:</strong> ${college}<br>
+          💻 <strong>Branch:</strong> ${branch}<br>
+          📅 <strong>Date & Time:</strong> Saturday, 6:00 PM IST (Online)<br>
+          🔗 <strong>Your Unique Referral Link:</strong><br>
+          <code>${link}</code><br><br>
+          🎁 <strong>REWARD LADDER (Invite Batchmates):</strong><br>
+          • <strong>2 Invites:</strong> ATS AI Resume Bullet Points<br>
+          • <strong>5 Invites:</strong> Complete GitHub Starter Repo + 50 AI Interview Questions<br>
+          • <strong>10 Invites:</strong> VIP Pass + Live Code Review<br><br>
+          💡 <em>Tip: Tap '/ideas' below to get your branch-tailored project blueprint!</em>
+        </div>
+      `;
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function handleIdeas() {
+      const branch = document.getElementById('simBranch').value;
+      const name = document.getElementById('simName').value || 'Student';
+      const chat = document.getElementById('chatBox');
+
+      chat.innerHTML += `
+        <div class="bg-blue-600 text-white p-3 rounded-xl ml-auto max-w-[80%] text-right font-medium">
+          /ideas
+        </div>
+        <div class="telegram-msg p-4 rounded-xl text-slate-800">
+          🎯 <strong>Personalized AI Project Blueprint for ${name}</strong><br>
+          📚 <strong>Domain:</strong> ${branch}<br><br>
+          🔥 <strong>Project Title:</strong> <code>Autonomous AI Job Matcher & Resume Tailor</code><br><br>
+          💡 <strong>Concept:</strong> An AI agent that parses job descriptions, scores resumes against ATS criteria, and generates tailored cover letters with structured JSON.<br><br>
+          🛠 <strong>Tech Stack:</strong> Python, Gemini Flash API, Pydantic, Streamlit<br><br>
+          📄 <strong>Ready-to-Use Resume Bullet Points:</strong><br>
+          • Architected ATS resume matcher using Gemini LLM, scoring candidate alignment across 15+ parameters.<br>
+          • Implemented structured Pydantic schema validation to parse unstructured PDF resumes with 94% accuracy.<br>
+          • Built real-time Streamlit dashboard reducing cover letter personalization time from 30 mins to &lt;15s.<br><br>
+          💼 <strong>Why Recruiters Love This:</strong> Demonstrates practical LLM orchestration and real HR tech workflows.
+        </div>
+      `;
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function handleLeaderboard() {
+      const chat = document.getElementById('chatBox');
+      chat.innerHTML += `
+        <div class="bg-blue-600 text-white p-3 rounded-xl ml-auto max-w-[80%] text-right font-medium">
+          /leaderboard
+        </div>
+        <div class="telegram-msg p-4 rounded-xl text-slate-800">
+          🏆 <strong>LIVE GROWTH LEADERBOARD</strong><br>
+          ━━━━━━━━━━━━━━━━━━━━━<br>
+          🔥 <strong>TOP STUDENT ADVOCATES:</strong><br>
+          🥇 <strong>Rahul Sharma</strong> (JNTU Hyd) — <code>32 invites</code><br>
+          🥈 <strong>Priya Patel</strong> (Anna Univ) — <code>29 invites</code><br>
+          🥉 <strong>Ankit Verma</strong> (VTU) — <code>24 invites</code><br><br>
+          🏛 <strong>COLLEGE STANDINGS:</strong><br>
+          👑 1. JNTU Hyderabad: <code>64 students</code><br>
+          2. Anna University: <code>58 students</code><br>
+          3. VTU Bangalore: <code>52 students</code><br><br>
+          ⚡ <em>Push your college to #1 by sharing your referral link with batch WhatsApp groups!</em>
+        </div>
+      `;
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
